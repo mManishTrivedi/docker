@@ -1,0 +1,37 @@
+version: '3'
+services:
+  database:
+    image: "postgres" # use latest official postgres version
+    container_name: postgres-latest
+    env_file:
+      - ./db/db.env # configure postgres
+    # logging:
+    #   options:
+    #     max-size: 10m
+    #     max-file: "3"
+
+    # TODO: maintain seperate file for postgre sql log 
+    command: ["postgres", "-c", "log_statement=all"] # all your queries will be written into the container log file
+
+      
+    ports:
+      - '5432:5432' # local port 5438:Docker Port 5432
+    volumes:
+      - postgresql-data:/var/lib/postgres/data # persist data even if container shuts down
+# volumes:
+#   postgres-data:./db/data/ # named volumes can be managed easier using docker-compose
+
+volumes:
+  postgresql-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./db/data/ # localpath
+  # postgress-logs:
+    # driver: local
+    # driver_opts:
+    #   o: bind
+    #   type: none
+    #   device: ./db/logs/ # localpath
+

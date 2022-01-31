@@ -12,7 +12,6 @@ services:
 
     # TODO: maintain seperate file for postgre sql log 
     command: ["postgres", "-c", "log_statement=all"] # all your queries will be written into the container log file
-
       
     ports:
       - '5432:5432' # local port 5438:Docker Port 5432

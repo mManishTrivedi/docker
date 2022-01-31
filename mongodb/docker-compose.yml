@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  database:
+    image: mongo:latest # use latest official postgres version
+    container_name: MongoDB-latest
+    env_file:
+      - ./db/db.env # configure mongodb
+
+    ports:
+      - 27017:27017 # local port:Docker Port
+    volumes:
+      -  mongodb-data:/data/db # persist data even if container shuts down
+
+volumes:
+  mongodb-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./db/data/ # localpath

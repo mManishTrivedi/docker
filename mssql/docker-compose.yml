@@ -1,0 +1,37 @@
+version: '3'
+services:
+  database:
+    image: "mcr.microsoft.com/mssql/server" # use latest official postgres version
+    container_name: SQL-Server
+    env_file:
+      - ./db/db.env # configure postgres
+    # logging:
+    #   options:
+    #     max-size: 10m
+    #     max-file: "3"
+
+      
+    ports:
+      - '1433:1433' # local port 1433:Docker Port 1433
+    volumes:
+      - ./db/data:/var/opt/mssql
+      # - mssql-data:/var/opt/mssql # persist data even if container shuts down
+      
+# volumes:
+#   postgres-data:./db/data/ # named volumes can be managed easier using docker-compose
+
+# volumes:
+#   - './db/data:/var/opt/mssql'
+  # postgresql-data:
+  #   driver: local
+  #   driver_opts:
+  #     o: bind
+  #     type: none
+  #     device: ./db/data/ # localpath
+  # postgress-logs:
+    # driver: local
+    # driver_opts:
+    #   o: bind
+    #   type: none
+    #   device: ./db/logs/ # localpath
+

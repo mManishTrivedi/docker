@@ -1,0 +1,27 @@
+version: '3'
+services:
+  Redis:
+    image: "redis" # use latest official postgres version
+    container_name: Redis-container
+    env_file:
+      - ./db/db.env # configure postgres
+    
+    command: redis-server --requirepass manish@123
+
+    ports:
+      - '6364:6379' # local port:Docker Port 
+    volumes:
+      - $PWD/db/data:/var/lib/redis # persist data even if container shuts down
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+    networks:
+        vpc_net:
+            ipv4_address: 172.29.1.1
+
+# networking for the Redis container
+networks:
+  vpc_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/16

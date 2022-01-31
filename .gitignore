@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+
+# Repo Specific
+mongodb/db/data/
+mssql/db/data/
+redis/db/data/
+postgres/db/data/
